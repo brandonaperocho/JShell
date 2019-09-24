@@ -1,0 +1,57 @@
+//Sprint 2 Backlog.
+
+October 24th to October 29th
+
+================================================================================================
+
+NOTES:
+
+1. Not all CRC Cards were implemented (as intended from last sprint), only the classes coded
+   so far were completed CRC Card wise.
+2. Cd and Mkdir commands are not yet fully coded (as intended from last sprint).
+3. Aside from the cases mentioned above, every other task was completed.
+
+================================================================================================
+
+Implementations (from Backlog) That Are To Be Made:
+
+1. Continue coding for the JShell, to the point of almost completing it (Full Input, Argument 
+   Identification, Cases)
+2. Complete the coding for the remaining commands (mkdir, cd, ls, pwd, echo, cat)
+
+================================================================================================
+
+Specific tasks:
+
+1a. CRC Cards for the remaining classes.
+2a. JShell correct input format
+2b. JShell correct command cases
+2c. JShell correct arguments provided identification
+2d. JShell avoids crashing
+2e. JShell implement other classes
+3a. Base code for mkdir command
+3b. Base code for cd command
+3c. Base code for ls command
+3d. Base code for pwd command
+3e. Base code for echo command (all possible scenarios)
+3f. Base code for cat command
+4a. Test cases for individual commands
+
+================================================================================================
+
+Tasks assigned to group members:
+
+U1. Brandon Aperocho
+U2. Mateusz Rogozinski
+U3. Brian Vu
+U4. Kwame Koram
+
+U1 Tasks: 4a, 1a, 3e
+
+U2 Tasks: 4a, 1a, 2a, 2b, 2c, 2d, 2e, 3f
+
+U3 Tasks: 4a, 1a, 3a, 3b
+
+U4 Tasks: 4a, 1a, 3c, 3d
+
+================================================================================================

@@ -1,0 +1,201 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package a2;
+
+/**
+ * LS Class --> Prints out the contents of the directory specified
+ * or the name of the file specified, or the contents of the current working
+ * directory if no arguments are specified
+ */
+public class LS implements Command{
+  private String[] contents; //directory contents to be printed (or filename)
+  private String[] separated; //array of each directory/file in path provided
+  boolean standard; //true if LS called without arguments, false otherwise
+  String fullPath; //path as typed in by user
+  //starting point for iteration through pathname (root or current directory)
+  Directory reference;
+  boolean validNames = true; //path does not contain two // in a row
+  boolean error = false; //true if there is any error in path provided
+  boolean recursive;
+  int subDirs = 0;
+  
+  /**
+   * Constructor for use when ls without any arguments (standard case)
+   * Will set reference directory to current working directory
+   * Contents will later be set to the sub files/folders of reference
+   * @param d --> current directory passed in as argument from JShell
+   */
+  public LS(Directory d, boolean recur){
+    standard = true;
+    reference = d;
+    recursive = recur;
+  }
+  
+  /**
+   * Constructor for use when ls is called with a path. (non-standard)
+   * Will set reference directory to either root or current directory,
+   * depending on if path is absolute path or relative path
+   * @param path --> path provided by user
+   * @param d --> Current working directory from JShell
+   * @param root --> Root directory from JShell
+   */
+  public LS(String path, Directory d, Directory root, boolean recur){
+
+    recursive = recur;
+    fullPath = path;
+    standard = false; //Non-standard call of LS (with arguments)
+    String toSeparate = path;
+    if (path.startsWith("/")){ // get rid of first slash in full path
+      toSeparate = path.substring(1); //avoids empty string in array
+    }
+    separated = toSeparate.split("/");
+    for (int i =0; i<path.length(); i++){
+      if (i != path.length()-1){
+        if (path.charAt(i)=='/' && path.charAt(i+1)=='/'){
+          validNames = false; //Paths with consecutive slashes are wrong
+        }
+      }
+    }
+    if (!path.startsWith("/")){
+      reference = d; //relative path
+    }else if (path.startsWith("/")){
+      reference = root; //absolute path
+    }
+  }
+
+  /**
+   * Will print each item in contents array on a new line.
+   * If non-standard, will print out directory/file name before contents
+   */
+  private void print(){
+    if (standard){
+      if (contents.length == 0){
+        System.out.println(""); //empty line for empty directories
+        return;
+      }
+      for (int i=0; i<contents.length; i++){
+        System.out.println(contents[i]);
+      }
+    }else{ //Non-standard, LS called with path as argument
+      if (!error){
+        System.out.println(fullPath+":"); //print dir/file name before contents
+      }if (contents.length == 0){
+        System.out.println("");
+        return;
+      }
+      for (int i=0; i<contents.length; i++){
+        System.out.println(contents[i]);
+      }
+    }
+  }
+  
+  /**
+   * Will set the contents to be printed to what they should be
+   * Sub files/folders for a directory, file contents for a file, error message
+   * if necessary
+   * @param ref --> The directory from which the path starts (root for absolute,
+   * current working directory for relative)
+   */
+  private void setContents(Directory ref){
+    if (standard){
+      contents = ref.getContents();
+      subDirs = ref.getNumberDirectories();
+      return;
+    }else if(fullPath.equals("/")){
+      contents = ref.getContents(); //contents of root directory
+      return;
+    }else if(!validNames){
+      setError();
+      return;
+    }iterateAndSet(ref);
+  }
+  
+  /**
+   * Parses path and sets contents to contents of specified file or directory
+   * @param ref --> root or current directory to start iteration from
+   */
+  public void iterateAndSet(Directory ref){
+    boolean currentIsFile = false;
+    Directory currDir = ref;
+    File currFile = null;
+    for (String current : separated){
+      if (currentIsFile){ //tried to get sub file/folder of a file
+        setError();
+        return;
+      }if (current.equals("..")){
+        if (currDir.getName().equals("/")){ //tried to get parent of root
+          setError();
+          return;
+        }currDir = currDir.getParent();
+      }else if (!current.equals(".")){
+        if(currDir.containsDirectory(current)){
+          currDir = currDir.getChildDirectory(current);
+        }else if (currDir.containsFile(current)){
+          currFile = currDir.getChildFile(current);
+          currentIsFile = true;
+        }else{ //file or folder does not exist at path specified
+          setError();
+          return;
+        }
+      }
+    }if (currentIsFile){
+      contents = new String[1]; contents[0] = currFile.getName();
+    }else if(!currentIsFile){
+      contents = currDir.getContents();
+      subDirs = currDir.getNumberDirectories();
+      reference = currDir;
+    }
+  }
+  
+  /**
+   * Sets contents to error message.
+   */
+  public void setError(){
+    error = true;
+    contents = new String[1];
+    contents[0] = "Invalid path. Please try again";
+  }
+  
+  /**
+   * Implements execute method for this command. Sets contents, and then prints
+   */
+  @Override
+  public void execute(){
+    setContents(reference);
+    print();
+    if (!error && recursive){
+      for (int i=0; i<subDirs; i++){
+        LS temp = new LS(reference.getChildDirectory(contents[i]), true);
+        temp.execute();
+      }
+    }
+  }
+  
+}

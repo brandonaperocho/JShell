@@ -1,0 +1,70 @@
+package a2;
+
+public class Move implements DirectoryCommand {
+  private Directory main;
+  private Directory root;
+  private String initPath;
+  private String newPath;
+  public Move(Directory mainDir, Directory rootDir, String oP, String nP){
+    main = mainDir;
+    root = rootDir;
+    initPath= oP;
+    newPath = nP;
+  }
+  
+  public String fullNewPath(){
+    DirectoryCommand x = new ChangeDirectory(main, root, newPath);
+    Directory newDir = x.execute();
+    return newDir.getFullPath();
+  }
+  
+  public boolean checkInitDirExists(String toBeMoved, Directory current) {
+    if (current.containsDirectory(toBeMoved)){
+      return true;
+    }
+    return false;
+  }
+  public boolean checkInitFileExists(String toBeMoved, Directory current) {
+    if (current.containsFile(toBeMoved)){
+      return true;
+    }
+    return false;
+  }
+  
+  public Directory relativePath(){
+    return main;
+  }
+  
+  public Directory absolutePath(){
+    return main;
+  }
+  
+  public Directory localPath(){
+    if (checkInitDirExists(initPath, main)){
+      Directory temp = main.getChildDirectory(initPath);
+      String tempNewPath = fullNewPath();
+      Directory x = new ChangeDirectory(main, root, tempNewPath).execute();
+      if (x.getFullPath().equals(tempNewPath)){
+        main.removeDirectory(initPath);
+        x.addDirectory(temp);
+        temp.changeParent(x);
+        // In Directory you need to change every instance of == to .equals or
+        // else it won't work.
+      }
+    }
+    return main;
+  }
+  
+  
+  
+  
+  
+  
+  
+  @Override
+  public Directory execute() {
+    
+   return localPath();
+  }
+
+}

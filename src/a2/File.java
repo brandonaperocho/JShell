@@ -1,0 +1,137 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package a2;
+
+/**
+ * File class. Stores a string as contents of file. Provides accessor and 
+ * mutator methods for classes to use to work with file contents
+ * Stores basic information about file: name, full path, parent directory, and
+ * provides accessors and mutators for this information as well
+ */
+public class File {
+  
+  private String contents; //contents of file
+  private String name; // filename
+  private String pathname; // full path of file
+  private Directory parent; // parent directory within which file is contained
+  
+  /**
+   * Constructor: initializes name and parent directory to arguments given
+   * Sets the full pathname to the parent directory's path + the filename
+   * @param filename
+   * @param dirParent
+   */
+  public File(String filename, Directory dirParent){
+    name = filename;
+    parent = dirParent;
+    if (parent.getName().equals("/")){
+      pathname = parent.getFullPath() + name;
+    }else{
+      //root dir has slash as name, so only add slash if parent is not root
+      pathname = parent.getFullPath() + "/" + name;
+    }
+  }
+  
+  /**
+   * Constructor: initializes name and parent directory to arguments given
+   * Also takes second string which represents file contents. (for Echo)
+   * Sets full pathname to the parent directory's path + filename
+   * @param filename
+   * @param dirParent
+   * @param fileContents
+   */
+  public File(String filename, Directory dirParent, String fileContents){
+    name = filename;
+    parent = dirParent;
+    contents = fileContents;
+    if (parent.getName().equals("/")){
+      pathname = parent.getFullPath() + name;
+    }else{
+      //root dir has slash as name, so only add slash if parent is not root
+      pathname = parent.getFullPath() + "/" + name;
+    }
+  }
+  
+  /**
+   * Returns name of file
+   * @return
+   */
+  public String getName(){
+    return name;
+  }
+  
+  /**
+   * Returns full path of file
+   * @return
+   */
+  public String getFullPath(){
+    return pathname;
+  }
+  
+  /**
+   * Changes file's parent to new directory given in argument
+   * Changes full path to reflect change of parent
+   * For use with mv, cp
+   * @param newParent
+   */
+  public void changeParent(Directory newParent){
+    parent = newParent;
+    if (!parent.getName().equals("/")){
+      pathname = parent.getFullPath() + "/" + name;
+    }else{
+      pathname = parent.getFullPath() + name;
+    }
+  }
+  
+  /**
+   * Returns contents of file
+   * @return
+   */
+  public String getContents(){
+    return contents;
+  }
+  
+  /**
+   * Changes contents of file to new string c, for use with echo
+   * @param c
+   */
+  public void overwriteContents(String c){
+    contents = c;
+  }
+  
+  /**
+   * Appends string, c, to contents of file. For use with echo.
+   * @param c
+   */
+  public void addToContents(String c){
+    contents += "\n"+c;
+  }
+
+}

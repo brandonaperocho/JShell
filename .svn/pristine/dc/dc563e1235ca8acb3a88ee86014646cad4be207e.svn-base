@@ -1,0 +1,68 @@
+package a2;
+
+import java.io.*;
+import java.net.*;
+
+public class GetURLFile implements DirectoryCommand {
+  private URL currentURL;// URL being inputted
+  private Directory currentDir;// Directory currently in
+  private Directory rootDir; // Root directory
+  private String toURLStr;
+  private String newFileName;
+  private String nameURL;
+
+  public GetURLFile(String current, Directory curDir, Directory root) {
+    currentDir = curDir;
+    rootDir = root;
+    nameURL = current;
+  }
+
+  public Directory execute() {
+    try {
+      currentURL = new URL(nameURL);
+      toURLStr = currentURL.getPath();
+      newFileName = toURLStr.split("/")[toURLStr.split("/").length - 1];
+      URLConnection currentURLConnection = currentURL.openConnection();
+      currentURLConnection.connect();
+      BufferedReader in =
+          new BufferedReader(new InputStreamReader(currentURL.openStream()));
+      String inputLine;
+      // File y = new File(newFileName, currentDir);
+      // Check if there is already a file with that name
+      // if there is _________
+      // currentDir.removeFile(newFileName);
+      // and then
+      // currentDir.addFile(y);
+
+      // You need to create the file to add the input onto. IDK how to do that
+      // with echo2.
+      // Echo2 x = new Echo2();
+      if (currentDir.containsFile(newFileName)) {
+        currentDir.getChildFile(newFileName).overwriteContents("");
+      }
+      while ((inputLine = in.readLine()) != null) {
+        String[] finalInput = {inputLine, ">>", newFileName};
+        if (currentDir.containsFile(newFileName)) {
+          if (currentDir.getChildFile(newFileName).getContents().equals("")) {
+            currentDir.getChildFile(newFileName).overwriteContents(inputLine);
+          } else {
+            Echo2 tempEcho2 = new Echo2(finalInput, currentDir, rootDir);
+            tempEcho2.execute();
+          }
+        } else {
+          Echo2 tempEcho2 = new Echo2(finalInput, currentDir, rootDir);
+          tempEcho2.execute();
+          
+        }
+      }
+      in.close();
+    } catch (MalformedURLException e) {
+      System.out.println("Couldn't get the file!");
+    } catch (IOException e) {
+      System.out.println("Couldn't get the file!");
+    }
+    return currentDir;
+  }
+
+
+}

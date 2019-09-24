@@ -1,0 +1,137 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package a2;
+
+/**
+ * <h1>Class History</h1> History is a class used to followed the singleton
+ * design pattern and polymorphism. This class is used to print all previous
+ * inputs the user entered in JShell.
+ * 
+ */
+
+public class History implements Command {
+  /**
+   * LinkedList l from JShell
+   */
+  private LinkedList l; // Instance Node for History
+  /**
+   * Array of Strings; args from the user of size 1 or 2
+   */
+  private String[] args; // User input split by whitespace
+
+  /**
+   * Constructor initializes instance node and user arguments list
+   * 
+   * @param userArgs --> split list of user's input into the JShell
+   * @param lst --> list of prior commands to point at which history is called
+   */
+  public History(String[] userArgs, LinkedList lst) {
+    l = lst;
+    args = userArgs;
+  }
+
+  /**
+   * If history entered without arguments, prints entire history (linked list)
+   * If entered with arguments, prints history specified by number provided
+   */
+  @Override
+  public void execute() {
+    if (args.length == 1) {
+      System.out.println(executePrint());
+    } else if (args.length == 2) {
+      if (args[1].matches("\\d+")) {
+        System.out.println(executePrintWithArgs(Integer.parseInt(args[1])));
+      }
+    }
+  }
+
+  /**
+   * Gets a formated string to print out on console
+   * 
+   * @return Formated string for user when history is called
+   */
+  public String executePrint() {
+    Node tempNode = l.getHead().getTail();
+    String returnStr = "";
+    for (int i = 0; l.getSize() > i; i++) {
+      returnStr += "" + (i + 1) + " " + tempNode.getElement().toString() + "\n";
+      tempNode = tempNode.getTail();
+    }
+    returnStr = returnStr.substring(0, returnStr.length() - 1); // Trims \n
+    return returnStr;
+
+  }
+
+  /**
+   * Gets a formated string to the n-th point in the list
+   * 
+   * @param userInput --> Number specified by user
+   * @return Formated string for user when history is called 
+   */
+  public String executePrintWithArgs(int userInput) {
+    String returnStr = "";
+    if (l.getSize() >= userInput) { // Makes sure number is > size of LL
+      Node tempNode = l.getHead().getTail();
+      for (int i = userInput; l.getSize() > i; i++) { 
+        tempNode = tempNode.getTail();
+      }
+      for (int i = 0; userInput > i; i++) {
+        returnStr +=
+            ("" + (l.getSize() - userInput + i + 1) + " "
+                + tempNode.getElement() + "\n");
+        tempNode = tempNode.getTail();
+      }
+      returnStr = returnStr.substring(0, returnStr.length() - 1); // Trims \n
+      return returnStr;
+    } else {
+      return "" + userInput + " too large of a value to use! Try: "
+          + (l.getSize() + 1);
+    }
+  }
+
+  /**
+   * Returns contents of Linked list of history, for testing purposes
+   * 
+   * @param l --> linked list of history of commands
+   * @return
+   */
+  public String getContentsOfHistory(LinkedList l) {
+    return l.getContentsOfList();
+  }
+
+  /**
+   * Adds data to the LinkedList
+   * 
+   * @param data --> Adds data to the LinkedList provided in the Constructor
+   */
+  public void addToHistoryList(String data) {
+    l.add(data);
+  }
+}

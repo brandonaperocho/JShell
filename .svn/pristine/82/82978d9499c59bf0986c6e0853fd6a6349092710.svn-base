@@ -1,0 +1,90 @@
+package a2;
+
+public class Grep implements Command {
+  boolean recursive;
+  boolean error = false;
+  boolean isFile;
+  Directory reference;
+  File referenceFile;
+  String toPrint;
+  String[] separated;
+  
+  public Grep(String path, Directory main, Directory root, boolean recur){
+    recursive = recur;
+    reference = main;
+    String toSeparate = path;
+    if (path.startsWith("/")){
+      reference = root;
+      toSeparate = toSeparate.substring(1);
+    }
+    
+    separated = toSeparate.split("/");
+    for (int i =0; i<path.length(); i++){
+      if (i != path.length()-1){
+        if (path.charAt(i)=='/' && path.charAt(i+1)=='/'){
+          error = true; //Paths with consecutive slashes are wrong
+        }
+      }
+    }
+    if (!error && !isFile && !recursive){
+      error = true;
+    }if (!error){
+      checkIsFile();
+    }
+  }
+  
+  private Grep(File f){
+    referenceFile = f;
+    recursive = false;
+    isFile = true;
+  }
+  
+  private void checkIsFile(){
+    isFile = false;
+    for (String current : separated){
+      if (isFile){
+        error = true;
+        return;
+      }if (current.equals("..")){
+        if (reference.getName().equals("/")){
+          error = true;
+          return;
+        }reference = reference.getParent();
+      }else if (!current.equals(".")){
+        if (reference.containsDirectory(current)){
+          reference = reference.getChildDirectory(current);
+        }else if (reference.containsFile(current)){
+          referenceFile = reference.getChildFile(current);
+          isFile = true;
+        }else{
+          error = true;
+          return;
+        }
+      }
+    }
+  }
+  
+  private void setPrint(){
+    //set toPrint to the lines in referenceFile that match regex.
+  }
+
+  @Override
+  public String execute() {
+    // TODO Auto-generated method stub
+    if (error){
+      return "Invalid command, please try again";
+    }
+    if (recursive && !isFile){
+      toPrint = "";
+      for (int i=reference.getNumberDirectories();
+          i<reference.getContents().length-1; i++){
+        Grep g = new Grep(reference.getChildFile(reference.getContents()[i]));
+        toPrint += g.execute();
+      }return toPrint;
+    }else{
+      setPrint();
+      return toPrint;
+    }
+  }
+
+}

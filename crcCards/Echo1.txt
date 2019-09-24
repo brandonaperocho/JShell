@@ -1,0 +1,13 @@
+Class Name: Echo1
+Parent Class: ------
+Subclasses: Echo2
+
+Responsibilities:
+*Prints out a String to the console provided by the user
+*Adds file to a Directory 
+*Overwrites a file contents if file exists
+
+Collaborators: 
+*ChangeDirectory
+*Command
+

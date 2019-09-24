@@ -1,0 +1,15 @@
+Class Name: JShell
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Keeps track of a directory
+*Continue to ask user for commands
+*Execute these commands
+*Terminate when needed
+
+Collaborators: 
+*Directory
+*LinkedList
+*HandleCase
+*InputTaker

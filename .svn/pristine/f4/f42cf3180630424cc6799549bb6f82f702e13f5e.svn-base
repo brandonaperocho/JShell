@@ -1,0 +1,10 @@
+Class Name: CopyItem
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Creates a new copy of any provided directory
+
+Collaborators: 
+*File
+*Directory

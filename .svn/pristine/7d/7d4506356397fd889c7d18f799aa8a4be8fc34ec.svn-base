@@ -1,0 +1,49 @@
+//Sprint 4 Backlog.
+
+November 9th to November 15th
+
+================================================================================================
+
+Implementations (from Backlog) That Are To Be Made:
+
+1. Have basic functionality of get command
+2. Have basic functionality of !number command
+3. Have basic functionality of new cat command
+4. Have base code for the ls subdirectory function 
+5. Have these commands integrated into JShell to be used by the user
+
+================================================================================================
+
+Specific tasks:
+
+1a. CRC Cards for commands and update them as needed
+2a. Have added functionality to cat command
+2b. Add test cases for the new cat command 
+2c. Update any classes if needed for this functionality to be easier to implement
+3a. Have base code for !number command
+3b. Update any classes if needed for this functionality to be easier to implement
+3c. Try to implement into JShell
+4a. Have added functionality to ls command
+4b. Add test cases for the new ls command
+4c. Update any classes if needed for this functionality to be easier to implement
+5a. Have base code for get command 
+5b. Update any classes if needed for this functionality to be easier to implement
+
+================================================================================================
+
+Tasks assigned to group members:
+
+U1. Brandon Aperocho
+U2. Mateusz Rogozinski
+U3. Brian Vu
+U4. Kwame Koram
+
+U1 Tasks: 1a, 3a, 3b, 3c
+
+U2 Tasks: 1a, 2a, 2b, 2c
+
+U3 Tasks: 1a, 5a, 5b
+
+U4 Tasks: 1a, 4a, 4b, 4c
+
+================================================================================================

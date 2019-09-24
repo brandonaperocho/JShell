@@ -1,0 +1,11 @@
+Class Name: Echo2
+Parent Class: Echo1
+Subclasses: ------
+
+Responsibilities:
+*Appends to a file provided that it exists
+
+Collaborators: 
+*ChangeDirectory
+*Command
+

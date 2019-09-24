@@ -1,0 +1,22 @@
+November 19 to November 22
+
+What did I work on last time?
+
+	- Implemented redirection for the following commands: 
+		- PWD
+		- History
+		- Man
+		- Mkdir
+		- CD
+	- Changed Command execute() method from void to string and editted the commands to have no errors after
+	- Fixed bugs in echo
+
+What do I plan on working now?
+
+	- Finish redirection for all commands
+	- Help finish grep command
+	- Finish/edit any JUnits for commands with redirection that are generated in STDOUT
+
+Am I blocked on anything?
+
+	- Nothing

@@ -1,0 +1,21 @@
+Class Name: HandleCase
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Takes parsed user input and executes whichever command is needed 
+
+Collaborators: 
+*Cat
+*ChangeDirectory
+*Directory
+*Echo1
+*Echo2
+*History
+*LinkedList
+*LS
+*MakeDirectory
+*ManCMD
+*PopD
+*PushD
+*PWD

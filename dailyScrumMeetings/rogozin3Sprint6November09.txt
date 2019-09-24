@@ -1,0 +1,16 @@
+November 9th, 2015 (ASSIGNMENT 2B)
+
+a) What did I work on last time? 
+- Finished Assignment 2A:
+	- Test Classes for ManCMD, MakeDirectory, HandleCase, Cat
+	- Finished final coding for MakeDirectory, Cat, InputTaker, HandleCase
+	- Finalized the CRC Cards
+
+b) What do I plan to work on now?
+- New CRC Card for Cat
+- Code the Cat class so it can print multiple files now
+- Test Class for the newly designed Cat class
+- Change the code in HandleCase to accommodate these changes
+
+c) Am I blocked on anything?  
+- 

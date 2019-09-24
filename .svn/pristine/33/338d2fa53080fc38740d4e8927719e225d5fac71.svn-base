@@ -1,0 +1,11 @@
+Class Name: LS
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Lists contents of directory or file specified by user
+
+Collaborators: 
+*Directory
+*File
+*Command

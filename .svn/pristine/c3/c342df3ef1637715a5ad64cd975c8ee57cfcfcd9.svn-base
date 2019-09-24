@@ -1,0 +1,18 @@
+November 15 to November 18
+
+What did I work on last time?
+
+	- Test cases, Javadocs, comments and honour code for PreviousCommand (!number)
+	- Implementation of PreviousCommand (!number)
+	- Looking on how to design the JShell to incorporate redirection
+
+What do I plan on working now?
+
+	- Make CRC Card for PreviousCommand (!number)
+	- Adding redirection to some if not all commands
+	- Create test cases for redirection
+	- Help others with commands when needed
+
+Am I blocked on anything?
+
+	- Nothing

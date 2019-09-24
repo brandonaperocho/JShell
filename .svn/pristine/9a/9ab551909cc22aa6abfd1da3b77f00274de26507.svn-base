@@ -1,0 +1,76 @@
+package a2;
+
+public class GetFullPath {
+  private String name;
+  private String fPath;
+  private Directory mainDir;
+  private String[] splitName;
+  private String lastPart;
+  
+  public GetFullPath(Directory main, String Path){
+    name = Path;
+    mainDir = main;
+    if (name.startsWith("/")) {
+      splitName = name.substring(1).split("/");
+    } else {
+      splitName = name.split("/");
+    }
+    lastPart = splitName[splitName.length - 1];
+  }
+  
+  public String getLast(){
+    String lastOne = getWithLast().split("/")[getWithLast().
+                                              split("/").length - 1];
+    return lastOne;
+  }
+
+  public String getWithLast(){
+    if (name.split("/").length == 1) {
+      if (mainDir.getFullPath().equals("/")){
+        fPath = mainDir.getFullPath() + name;
+      } else {
+        fPath = mainDir.getFullPath() + "/" + name;
+      }
+      } // Returns error message or the contents
+    else {
+      // The event the name is absolute
+      if (name.startsWith("/")) {
+        //if (name.length() == lastPart.length() + 1) {
+          fPath = name;
+        //} // Below is the event the name is relative
+      } else if (!name.startsWith("/") && splitName.length > 1) {
+        if (mainDir.getFullPath().equals("/")) {
+          fPath = mainDir.getFullPath()
+              + name;
+        } else {
+          fPath = mainDir.getFullPath() + "/"
+              + name;
+        }
+      }
+  } return fPath;
+  }
+  
+  public String getWithoutLast(){
+    if (name.split("/").length == 1) {
+      fPath = mainDir.getFullPath();
+      } // Returns error message or the contents
+    else {
+      // The event the name is absolute
+      if (name.startsWith("/")) {
+        if (name.length() == lastPart.length() + 1) {
+          fPath = "/";
+        } else {
+          fPath = name.substring(0, name.length() - (lastPart.length() + 1));
+        } // Below is the event the name is relative
+      } else if (!name.startsWith("/") && splitName.length > 1) {
+        if (mainDir.getFullPath().equals("/")) {
+          fPath = mainDir.getFullPath()
+              + name.substring(0, name.length() - (lastPart.length() + 1));
+        } else {
+          fPath = mainDir.getFullPath() + "/"
+              + name.substring(0, name.length() - (lastPart.length() + 1));
+        }
+      }
+  } return fPath;
+  }
+}

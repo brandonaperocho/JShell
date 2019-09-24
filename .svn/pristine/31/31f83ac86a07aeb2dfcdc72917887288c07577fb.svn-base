@@ -1,0 +1,87 @@
+package a2;
+
+public class Move implements DirectoryCommand {
+  private Directory main;
+  private Directory root;
+  private String initPath;
+  private String newPath;
+  private String initial;
+  private String toBeMoved;
+
+  public Move(Directory mainDir, Directory rootDir, String oP, String nP) {
+    main = mainDir;
+    root = rootDir;
+    initPath = oP;
+    newPath = nP;
+  }
+
+  public Directory moveDir() {
+    ChangeDirectory tempOldAct2 = new ChangeDirectory(main, root, initPath);
+    ChangeDirectory tempNew2 = new ChangeDirectory(main, root, newPath);
+    Directory tempOldAct = tempOldAct2.execute();
+    Directory tempNew = tempNew2.execute();
+    if (tempOldAct2.isValid() && tempNew2.isValid()) {
+      toBeMoved = tempOldAct.getName();
+      Directory tempOld = tempOldAct.getParent();
+      tempOld.removeDirectory(toBeMoved); // remove it from the old location
+      tempOldAct.changeParent(tempNew); // change it's parent to the new one
+      if (tempNew.containsDirectory(toBeMoved)) {
+        tempNew.removeDirectory(toBeMoved);
+        tempNew.addDirectory(tempOldAct);
+      } else {
+        tempNew.addDirectory(tempOldAct);
+      }
+    } else {
+      System.out
+          .println("You can't move " + initPath + " into " + newPath + "!");
+    }
+    return main;
+  }
+
+  public Directory moveFile() {
+    initial = new GetFullPath(main, initPath).getWithoutLast();
+    toBeMoved = new GetFullPath(main, initPath).getLast();
+    if (!toBeMoved.equals("/")) {
+      Directory temp = new ChangeDirectory(main, root, initial).execute();
+      if (temp.containsFile(toBeMoved)) {
+        File tempMove = temp.getChildFile(toBeMoved);
+        ChangeDirectory x = new ChangeDirectory(main, root, newPath);
+        Directory newer = x.execute();
+        if (x.isValid()) {
+          temp.removeFile(toBeMoved);
+          tempMove.changeParent(newer);
+          if (newer.containsFile(toBeMoved)) {
+            newer.removeFile(toBeMoved);
+            newer.addFile(tempMove);
+          } else {
+            newer.addFile(tempMove);
+          }
+        } else {
+          System.out
+              .println("You can't move " + initPath + " into " + newPath + "!");
+        }
+      } else {
+        System.out
+            .println("You can't move " + initPath + " into " + newPath + "!");
+      }
+    } else {
+      System.out
+          .println("You can't move " + initPath + " into " + newPath + "!");
+    }
+    return main;
+  }
+
+
+
+  @Override
+  public Directory execute() {
+    ChangeDirectory decider = new ChangeDirectory(main, root, initPath);
+    decider.execute();
+    if (decider.isValid()) {
+      return moveDir();
+    } else {
+      return moveFile();
+    }
+  }
+
+}

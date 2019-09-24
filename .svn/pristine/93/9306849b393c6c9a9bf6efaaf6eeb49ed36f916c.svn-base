@@ -1,0 +1,10 @@
+Class Name: MakeDirectory
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Declare and create a Directory with specified name
+
+Collaborators: 
+*Directory
+*DirectoryCommand

@@ -1,0 +1,14 @@
+1. As a User, I now want to be able to use the ls command within JShell, so that I can             || Estimate: 1 - 2 Day(s)
+view all the subdirectories.                                                                       ||
+2. As a User, I now want to be able to use the mv command within JShell, so that I can             || Estimate: 1 - 2 Day(s)
+move directories/files from one location to another.                                               ||
+3. As a User, I now want to be able to use the cp command within JShell, so that I can             || Estimate: 0 - 1 Day(s)
+copy directories/files to a location.                                                              ||
+4. As a User, I now want to be able to use the get command within JShell, so that I can            || Estimate: 1 - 2 Day(s)
+get a file from a URL.                                                                             ||
+5. As a User, I now want to be able to use the cat command within JShell, so that I can            || Estimate: 0 - 1 Day(s)
+view the contents of file(s).                                                                      ||
+6. As a User, I now want to be able to use the !number command within JShell, so that              || Estimate: 0 - 1 Day(s)
+I can execute a previously entered input.                                                          ||
+7. As a User, I now want to be able to use the grep command within JShell, so that I               || Estimate: 2 - 3 Day(s)
+can see information on which files contain some REGEX.                                             ||

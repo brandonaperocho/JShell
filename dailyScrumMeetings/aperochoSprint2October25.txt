@@ -1,0 +1,19 @@
+What did I work on last time?
+
+	- Pushd command
+	- Popd command
+	- History command
+	- Created Node class
+	- Created LinkedList class (used in history, and PushdPopd class) 
+	- Sprint Backlog 1
+
+What do I plan on working now?
+
+	- Echo class
+	- Create some test classes for some commands
+	- Help finish remaining CRC Cards
+
+Am I blocked on anything?
+
+	- I should not be blocked on anything since the File and Directory class are done 
+	

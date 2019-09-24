@@ -1,0 +1,12 @@
+Class Name: LS
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Returns string of list of contents of directory or file specified by user
+*If recursive, returns list of contents of all subdirectories of directory
+
+Collaborators: 
+*Directory
+*File
+*Command

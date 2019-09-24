@@ -1,0 +1,10 @@
+Class Name: InputTaker
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Takes input from user
+*Splits up the input into an array to be readable for JShell
+
+Collaborators: 
+*LinkedList

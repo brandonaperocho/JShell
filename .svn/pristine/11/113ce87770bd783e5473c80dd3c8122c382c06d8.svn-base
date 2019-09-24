@@ -1,0 +1,153 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package test;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+import a2.ManCMD;
+
+public class ManCMDTest {
+
+  // Test when command is /# man man -----------------------------------------
+  @Test
+  public void testManManual() {
+    ManCMD temp = new ManCMD("man");
+    String expected = "man -- Print documentation for a command (CMD). An "
+        + "example is as follows. /# man CMD";
+    assertEquals(expected, temp.getManManual());
+  }
+
+  // Test when command is /# man history -------------------------------------
+  @Test
+  public void testHistoryManual() {
+    ManCMD temp = new ManCMD("history");
+    String expected = "history -- Will print out recent commands, of "
+        + "amount specified by argument, or all by default. An example is"
+        + " as follows. /# history 4";
+    assertEquals(expected, temp.getHistoryManual());
+  }
+
+  // Test when command is /# man echo ----------------------------------------
+  @Test
+  public void testEchoManual() {
+    ManCMD temp = new ManCMD("echo");
+    String expected = "echo -- If only first arg is provided, it will be"
+        + " printed onto the JShell. An example is as follows. /# echo "
+        + "\"ayyy\"\necho (>) -- Put STRING into OUTFILE. If OUTFILE "
+        + " doesn't exist, create a new file called OUTFILE. Otherwise"
+        + " replace contents of OUTFILE with STRING. An example is as "
+        + "follows. /# echo \"ayyy\" > newFile\necho (>>) -- Append STRING "
+        + "to OUTFILE. If OUTFILE "
+        + " doesn't exist, create a new file called OUTFILE. Otherwise"
+        + " append STRING to OUTFILE. An example is as follows. /# echo "
+        + "\"ayyy\" > newFile";
+    assertEquals(expected, temp.getEchoManual());
+  }
+
+  // Test when command is /# cat ---------------------------------------------
+  @Test
+  public void testCatManual() {
+    ManCMD temp = new ManCMD("cat");
+    String expected = "cat -- Display the contents of the file provided"
+        + " into the JShell. An example is as follows. /# cat seeFile";
+    assertEquals(expected, temp.getCatManual());
+  }
+
+  // Test when command is /# popd --------------------------------------------
+  @Test
+  public void testPopdManual() {
+    ManCMD temp = new ManCMD("popd");
+    String expected = "popd -- Remove the last entry of dir stack, and "
+        + "make it your current directory. An example is as follows. /# "
+        + "popd";
+    assertEquals(expected, temp.getPopdManual());
+  }
+
+  // Test when command is /# pushd -------------------------------------------
+  @Test
+  public void testPushdManual() {
+    ManCMD temp = new ManCMD("pushd");
+    String expected = "pushd -- Save the current directory to the dir "
+        + "stack, and then change the new current directory to the one "
+        + "provided as an argument. An example is as follows. /# pushd "
+        + "newDIR";
+    assertEquals(expected, temp.getPushdManual());
+  }
+
+  // Test when command is /# pwd ---------------------------------------------
+  @Test
+  public void testPwdManual() {
+    ManCMD temp = new ManCMD("pwd");
+    String expected = "pwd -- Prints the FULL directory path of the"
+        + " current directory. An example is as follows. /# pwd";
+    assertEquals(expected, temp.getPwdManual());
+  }
+
+  // Test when command is /# ls ----------------------------------------------
+  @Test
+  public void testLsManual() {
+    ManCMD temp = new ManCMD("ls");
+    String expected = "ls -- Prints the content of the current directory"
+        + " or directory/file that is provided as an argument. An example"
+        + " is as follows. /# ls testFile";
+    assertEquals(expected, temp.getLsManual());
+  }
+
+  // Test when command is /# cd ----------------------------------------------
+  @Test
+  public void testCdManual() {
+    ManCMD temp = new ManCMD("cd");
+    String expected = "cd -- Changes current directory to the one "
+        + "provided. Can be relative to current dir or full path. An"
+        + " example is as follows. /# cd newDIR";
+    assertEquals(expected, temp.getCdManual());
+  }
+
+  // Test when command is /# mkdir -------------------------------------------
+  @Test
+  public void testMkdirManual() {
+    ManCMD temp = new ManCMD("mkdir");
+    String expected = "mkdir -- Creates directories. An example is as "
+        + "follows. /# mkdir newDIR";
+    assertEquals(expected, temp.getMkdirManual());
+  }
+
+  // Test when command is /# exit --------------------------------------------
+  @Test
+  public void testExitManual() {
+    ManCMD temp = new ManCMD("exit");
+    String expected =
+        "exit -- Quit the program. An example is as follows. " + "/# exit";
+    assertEquals(expected, temp.getExitManual());
+  }
+
+}

@@ -1,0 +1,32 @@
+package a2;
+
+public class CopyItem {
+  private Directory oriDir;
+  private Directory newDir;
+  private Directory oriPar;
+
+  public CopyItem(Directory dir, Directory oriParent){
+    oriDir = dir;
+    oriPar = oriParent;
+    newDir = new Directory(oriDir.getName(), oriPar);
+  }
+  
+  private void recurseThru(Directory original, Directory newOne){
+    for (String content : original.getContents()){
+      if (original.containsFile(content)){
+        File x = new File(content, newOne);
+        String addTo = original.getChildFile(content).getContents();
+        x.overwriteContents(addTo);
+        newOne.addFile(x);  
+      } else if (original.containsDirectory(content)){
+        Directory x = new Directory(content, newOne);
+        newOne.addDirectory(x);
+        recurseThru(original.getChildDirectory(content), x);
+      }
+    }
+  }
+  public Directory returnDirectory(){
+    recurseThru(oriDir, newDir);
+    return newDir;
+  }
+}

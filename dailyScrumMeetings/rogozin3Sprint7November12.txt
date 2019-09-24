@@ -1,0 +1,15 @@
+November 12th, 2015 (ASSIGNMENT 2B)
+
+a) What did I work on last time? 
+- Edited the Cat CRC Card
+- Coded the Cat class so that it can print multiple files
+- Updated the Test class for Cat to incorporate this
+- Made small change in HandleCase to implement the changes
+
+b) What do I plan to work on now?
+- Begin brainstorming on how the mv and cp codes should work
+- Begin thinking on how to write the code for these commands
+- Inspect classes and see if I can do anything to clean up code
+
+c) Am I blocked on anything?  
+- 

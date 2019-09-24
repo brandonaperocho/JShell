@@ -1,0 +1,10 @@
+Class Name: PreviousCommand
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Call the command in the history list and executes it accordingly
+
+Collaborators: 
+*HandleCase
+*DirectoryCommand

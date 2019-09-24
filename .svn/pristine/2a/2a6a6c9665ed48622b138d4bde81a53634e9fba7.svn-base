@@ -1,0 +1,480 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package a2;
+
+import java.util.Arrays;
+
+/**
+ * <h1>HandleCase</h1> This class decides which command will be ran, if needed.
+ */
+public class HandleCase {
+  /**
+   * This is an array of the input entered by a user, separated on whitespace.
+   */
+  private String[] listOfInput;
+  /**
+   * This is the current working directory.
+   */
+  private Directory mainDir;
+  /**
+   * This is the root directory.
+   */
+  private Directory rootDir;
+  /**
+   * This is whether or not a command that implements the Command interface is
+   * being called upon.
+   */
+  private boolean foundCommand;
+  /**
+   * This is the LinkedList of the input history.
+   */
+  private LinkedList historyListHC;
+  /**
+   * This is the (Stack) of all directories that were pushd or popd.
+   */
+  private LinkedList pushDPopDStackHC;
+  /**
+   * This is whether or not a command that implements the DirectoryCommand
+   * interface is being called upon.
+   */
+  private boolean foundDirCommand;
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * HandleCase Constructor
+   * 
+   * @param inputRec - Array of User Input
+   * @param curr - Current Directory
+   * @param root - Root Directory
+   * @param l1 - History LinkedList
+   * @param l2 - PushdPopD Stack/LinkedList
+   */
+  public HandleCase(String[] inputRec, Directory curr, Directory root,
+      LinkedList l1, LinkedList l2) {
+    listOfInput = inputRec;
+    mainDir = curr;
+    rootDir = root;
+    historyListHC = l1;
+    pushDPopDStackHC = l2;
+    foundCommand = false;
+    foundDirCommand = false;
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * It will check if the command that is input is one that implements the
+   * Command class. (returns void)
+   * 
+   * @return foundCommand - boolean representing if a command that returns void
+   *         is requested
+   */
+  public boolean findCommand() {
+    if (listOfInput[0].equals("man")) {
+      foundCommand = true;
+    } else if (listOfInput[0].equals("history")) {
+      foundCommand = true;
+    } else if (listOfInput[0].equals("echo")) {
+      foundCommand = true;
+    } else if (listOfInput[0].equals("ls")) {
+      foundCommand = true;
+    } else if (listOfInput[0].equals("cat")) {
+      foundCommand = true;
+    } else if (listOfInput[0].equals("pwd")) {
+      foundCommand = true;
+    } else {
+      foundCommand = false;
+    }
+    return foundCommand;
+  }
+
+  /**
+   * This method will call the methods in this class (get_____) that work with
+   * other classes, which will ultimately execute the command.
+   */
+  public void executeCommand() {
+    if (listOfInput[0].equals("man")) {
+      getManCMD();
+    } else if (listOfInput[0].equals("history")) {
+      getHistory();
+    } else if (listOfInput[0].equals("echo")) {
+      getEcho();
+    } else if (listOfInput[0].equals("ls")) {
+      getLS();
+    } else if (listOfInput[0].equals("cat")) {
+      getCat();
+    } else if (listOfInput[0].equals("pwd")) {
+      getPWD();
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * It will check if the command that is input is one that implements the
+   * DirectoryCommand class. (returns Directory)
+   * 
+   * @return foundCommand - boolean representing if a command that returns
+   *         Directory is requested
+   */
+  public boolean findDirCommand() {
+    if (listOfInput[0].equals("mkdir")) {
+      foundDirCommand = true;
+    } else if (listOfInput[0].equals("cd")) {
+      foundDirCommand = true;
+    } else if (listOfInput[0].equals("pushd")) {
+      foundDirCommand = true;
+    } else if (listOfInput[0].equals("popd")) {
+      foundDirCommand = true;
+    } else if (listOfInput[0].charAt(0) == '!') {
+      foundDirCommand = true;
+    } else {
+      foundDirCommand = false;
+    }
+    return foundDirCommand;
+  }
+
+  /**
+   * This method will call the methods in this class (get_____) that work with
+   * other classes, which will ultimately execute the command.
+   * 
+   * @return Directory - Will return a directory that is now going to be the
+   *         current working directory
+   */
+  public Directory executeDirCommand() {
+    if (listOfInput[0].equals("mkdir")) {
+      return getMakeDirectory();
+    } else if (listOfInput[0].equals("cd")) {
+      return getCD(); // just temporary so it matches type. replace it later
+    } else if (listOfInput[0].equals("pushd")) {
+      return getPushD();
+    } else if (listOfInput[0].equals("popd")) {
+      return getPopD();
+    } else if (listOfInput[0].charAt(0) == '!') {
+      return getPreviousCommand();
+    } else {
+      return mainDir;
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will return if the command was a Command (as a boolean)
+   * 
+   * @return foundCommand (boolean) - depending on if one was found
+   */
+  public boolean wasCommandFound() {
+    return foundCommand;
+  }
+
+  /**
+   * Will return if the command was a DirectoryCommand (as a boolean)
+   * 
+   * @return foundDirCommand (boolean) - depending on if one was found
+   */
+  public boolean wasDirCommandFound() {
+    return foundDirCommand;
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will print the command manual, or a valid error message
+   */
+  public void getManCMD() {
+    if (listOfInput.length == 2) { // Make sure takes the right # of args
+      ManCMD temp = new ManCMD(listOfInput[1]);
+      temp.execute();
+    } else { // Otherwise it is an error
+      System.out.println("Invalid command, please try again.");
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will print the history of inputs entered (depending on input)
+   */
+  public void getHistory() {
+    if (listOfInput.length <= 2) { // Makes sure number of args are correct
+      History temp = new History(listOfInput, historyListHC); // Object created
+      if (listOfInput.length == 2 && !(listOfInput[1].matches("\\d+"))) {
+        System.out.println("Invalid argument used!"); // Trigger error message
+      } else {
+        temp.execute(); // Executes code when all args are correct
+      }
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will print a string to JShell, append to a file, overwrite a file, and
+   * create a file (depending on input)
+   */
+  public void getEcho() {
+    if (listOfInput.length > 1) {
+      String originalStr = (String) historyListHC.peekAtTop();
+      originalStr = originalStr.trim();
+      while (originalStr.charAt(0) == '!'
+          && originalStr.substring(1).matches("\\d+")) {
+        originalStr = originalStr.substring(1);
+        originalStr =
+            (String) historyListHC.peekAtPoint(Integer.parseInt(originalStr));
+        originalStr.trim();
+      }
+      String[] splitAtEcho = originalStr.split("\\s+", 2);
+      String testString = splitAtEcho[1];
+      String[] secondSplit;
+      String[] finalSplit;
+      String[] finalInput = null;
+      int counter = 0;
+      boolean flagErr = true;
+
+      for (int i = 0; testString.length() > i; i++) {
+        if (testString.charAt(i) == '"') {
+          counter++;
+        }
+      }
+
+      if (counter != 2 || testString.charAt(0) != '"') {
+        System.out.println("Invalid set of arguments provided!");
+        flagErr = false;
+      } else {
+        secondSplit = testString.split("\"");
+        secondSplit = Arrays.copyOfRange(secondSplit, 1, secondSplit.length);
+
+        if (secondSplit.length == 1) {
+          finalInput = new String[1];
+          finalInput[0] = secondSplit[0];
+        } else if (secondSplit.length == 2 && secondSplit[1].charAt(0) == ' ') {
+          finalSplit = secondSplit[1].split("\\s+");
+          finalSplit = Arrays.copyOfRange(finalSplit, 1, finalSplit.length);
+          
+          if (finalSplit.length < 1 || !((finalSplit[0].equals(">")
+              && finalSplit.length == 2) || (finalSplit[0].equals(">>") 
+              && finalSplit.length == 2))) {
+            System.out.println("Invalid set of arguments!");
+            flagErr = false;
+          } else {
+            finalInput = new String[3];
+            finalInput[0] = secondSplit[0];
+            finalInput[1] = finalSplit[0];
+            finalInput[2] = finalSplit[1];
+          }
+        } else {
+          System.out.println("Invalid set of arguments provided!");
+          flagErr = false;
+        }
+      }
+      if (flagErr) {
+        DirectoryCommand echo1 = new Echo1(finalInput, mainDir, rootDir);
+        DirectoryCommand echo2 = new Echo2(finalInput, mainDir, rootDir);
+
+        if (finalInput.length == 1) {
+          echo1.execute();
+        } else if (finalInput[1].equals(">")) {
+          echo1.execute();
+        } else if (finalInput[1].equals(">>")) {
+          echo2.execute();
+        }
+      }
+    } else {
+      System.out.println ("No arguments given!");
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Prints the current working directory
+   */
+  public void getPWD() {
+    if (listOfInput.length == 1) { // Make sure # of args is correct
+      Command temp = new PWD(mainDir);
+      temp.execute();
+    } else { // Otherwise print an error
+      System.out.println("Invalid command, please try again.");
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  /**
+   * Gets previous command from whatever position given by user
+   * 
+   * @return
+   */
+  public Directory getPreviousCommand() {
+    if (listOfInput.length == 1 && listOfInput[0].charAt(0) == '!') {
+      // Make sure # of args is correct
+      if (listOfInput[0].substring(1).matches("\\d+")) {
+        DirectoryCommand temp =
+            new PreviousCommand(listOfInput, mainDir, rootDir, historyListHC,
+                pushDPopDStackHC);
+        return temp.execute();
+      } else { // Otherwise print an error
+        System.out.println("Please put a number after the '!' character!");
+      }
+    } else {
+      System.out.println("Invalid amount of arguments given!");
+    }
+    return mainDir;
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Prints the contents of a specified files, or prints an error message
+   */
+  public void getCat() {
+    if (listOfInput.length == 2) { // If only 1 file is provided.
+      Command temp = new Cat(mainDir, rootDir, listOfInput[1]);
+      temp.execute();
+    } else { // If multiple files are provided.
+      Command temp = new Cat(mainDir, rootDir, listOfInput);
+      temp.execute();
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will create a directory the is located at a path provided
+   * 
+   * @return mainDir - Directory which contains the newly created directory, if
+   *         correct arguments were provided
+   */
+  public Directory getMakeDirectory() {
+    if (listOfInput.length >= 2) { // Make sure # of args is correct
+      // iterate through every arg that is provided, make them each directories
+      for (int i = 1; i < listOfInput.length; i++) {
+        DirectoryCommand temp =
+            new MakeDirectory(listOfInput[i], mainDir, rootDir);
+        mainDir = temp.execute();
+      }
+    } // return whatever the mainDir has been modified to (if it has)
+    return mainDir;
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will print out the contents of a specified path or directory
+   */
+  public void getLS() {
+    if (listOfInput.length == 1) {
+      Command temp = new LS(mainDir, false);
+      temp.execute();
+    } else if (!listOfInput[1].equals("-R")) {
+      for (int i = 1; i < listOfInput.length; i++) {
+        Command temp = new LS(listOfInput[i], mainDir, rootDir, false);
+        temp.execute();
+        if (i != listOfInput.length - 1) {
+          System.out.println();
+        }
+      }
+    } else if (listOfInput.length == 2 && listOfInput[1].equals("-R")) {
+      Command temp = new LS(mainDir, true);
+      temp.execute();
+    } else {
+      for (int i = 2; i < listOfInput.length; i++) {
+        Command temp = new LS(listOfInput[i], mainDir, rootDir, true);
+        temp.execute();
+        if (i != listOfInput.length - 1) {
+          System.out.println();
+        }
+      }
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Will switch from current directory to a new path that is specified
+   * 
+   * @return Directory - the directory that you are to be switching into
+   */
+  public Directory getCD() {
+    if (listOfInput.length == 2) {
+      DirectoryCommand temp =
+          new ChangeDirectory(mainDir, rootDir, listOfInput[1]);
+      Directory tempDir = temp.execute();
+      if (tempDir.equals(mainDir)) {
+        System.out.println("Invalid command. Please try again");
+      }
+      return tempDir;
+    } else {
+      System.out.println("Must provide one argument (directory).");
+      return mainDir;
+    }
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Saves the current directory, and pushes it into a stack. It then changes
+   * you to a new specified directory
+   * 
+   * @return Directory - the directory that you wish to switch into
+   */
+  public Directory getPushD() {
+    if (listOfInput.length == 2) {
+      DirectoryCommand temp =
+          new PushD(mainDir, rootDir, listOfInput[1], pushDPopDStackHC);
+      return temp.execute();
+    }
+    System.out.println("Invalid amount of arguments given!");
+    return mainDir;
+  }
+
+  // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Takes the top directory from a stack, and changes into this directory
+   * 
+   * @return Directory - the directory that is at the top of the stack
+   */
+  public Directory getPopD() {
+    if (listOfInput.length == 1) {
+      DirectoryCommand temp = new PopD(mainDir, rootDir, pushDPopDStackHC);
+      return temp.execute();
+    }
+    System.out.println("Invalid amount of arguments given!");
+    return mainDir;
+  }
+}
+
+
+// ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

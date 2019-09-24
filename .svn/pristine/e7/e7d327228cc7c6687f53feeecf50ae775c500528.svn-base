@@ -1,0 +1,113 @@
+package a2;
+
+import java.util.regex.*;
+
+public class Grep implements Command {
+  boolean recursive;
+  boolean error = false;
+  boolean isFile;
+  Directory reference;
+  File referenceFile;
+  String toPrint;
+  String[] separated;
+  String regex;
+  
+  public Grep(String path, String expression, 
+      Directory main, Directory root, boolean recur){
+    recursive = recur;
+    regex = expression;
+    reference = main;
+    String toSeparate = path;
+    if (path.startsWith("/")){
+      reference = root;
+      toSeparate = toSeparate.substring(1);
+    }
+    
+    separated = toSeparate.split("/");
+    for (int i =0; i<path.length(); i++){
+      if (i != path.length()-1){
+        if (path.charAt(i)=='/' && path.charAt(i+1)=='/'){
+          error = true; //Paths with consecutive slashes are wrong
+        }
+      }
+    }if (path.equals("/")){
+      reference = root;
+      isFile = false;
+    }
+    else if (!error){
+      checkIsFile();
+    }if (!error && !isFile && !recursive){
+      error = true;
+      //System.out.println("1");
+    }
+  }
+  
+  private Grep(File f, String expression){
+    regex = expression;
+    referenceFile = f;
+    recursive = false;
+    isFile = true;
+  }
+  
+  private void checkIsFile(){
+    isFile = false;
+    for (String current : separated){
+      if (isFile){
+        error = true;
+        //System.out.println("2"); //iterating into file
+        return;
+      }if (current.equals("..")){
+        if (reference.getName().equals("/")){
+          error = true;
+          //System.out.println("3"); //parentn of root
+          return;
+        }reference = reference.getParent();
+      }else if (!current.equals(".")){
+        if (reference.containsDirectory(current)){
+          reference = reference.getChildDirectory(current);
+        }else if (reference.containsFile(current)){
+          referenceFile = reference.getChildFile(current);
+          isFile = true;
+        }else{
+          error = true;
+          //System.out.println("4"); //inexistent file
+          return;
+        }
+      }
+    }
+  }
+  
+  private void setPrint(){
+    //set toPrint to the lines in referenceFile that match regex.
+    String[] lines = referenceFile.getContents().split("\n");
+    for (String line : lines){
+      Pattern p = Pattern.compile(regex);
+      Matcher m = p.matcher(line);
+      if (m.find()){
+        toPrint += line + "\n";
+      }
+    }toPrint += "\n";
+  }
+
+  @Override
+  public String execute() {
+    // TODO Auto-generated method stub
+    toPrint = "";
+    if (error){
+      return "Invalid command, please try again";
+    }
+    if (recursive && !isFile){
+      for (int i=reference.getNumberDirectories();
+          i<reference.getContents().length; i++){
+        Grep g;
+        g= new Grep(reference.getChildFile(reference.getContents()[i]), regex);
+        toPrint += g.execute();
+      }return toPrint;
+    }else{
+      toPrint += referenceFile.getName() + ":\n";
+      setPrint();
+      return toPrint;
+    }
+  }
+
+}

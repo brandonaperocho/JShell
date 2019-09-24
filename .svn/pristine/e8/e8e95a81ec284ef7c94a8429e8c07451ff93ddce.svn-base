@@ -1,0 +1,51 @@
+package a2;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+public class GetURLFile {
+  private URL currentURL;//URL being inputted
+  private Directory currentDir;//Directory currently in
+  private File curFile;//file being detected
+  
+  public GetURLFile(URL current,Directory curDir){
+    currentURL=current;
+    currentDir=curDir;
+    
+  }
+  
+  public void readURL(){
+    URLConnection c = currentURL.openConnection();
+    
+    BufferedReader br = new BufferedReader
+        (new InputStreamReader(c.getInputStream()));
+    String contents;
+    String fileName=(String) current;
+    File file = new File((fileName),currentDir);
+    
+    if (!file.exists()){
+      file.createNewFile();
+    }
+    
+    FileWriter fw = new FileWrter(file.getAbsoluteFile());
+    BufferedWriter bw = new BufferedWriter(fw);
+    
+    while((inputLine = br.readLine())!=null){
+      bw.write(contents);
+    }
+    
+    bw.close();
+    br.close();
+    
+    currentDir.addFile(file);
+    
+  }
+
+}

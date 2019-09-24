@@ -1,0 +1,10 @@
+Class Name: ChangeDirectory
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Changes current Directory to specified Directory
+
+Collaborators: 
+*Directory
+*DirectoryCommand

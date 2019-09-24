@@ -1,0 +1,17 @@
+October 27th, 2015
+
+a) What did I work on last time? 
+- Modified the JShell a bit
+- Revised the ManCMD class
+- Test file for ManCMD class
+- Updated CRC cards, added CRC card for Cat
+- Coded the Cat class
+
+b) What do I plan to work on now?  
+- Continue Coding the JShell 
+- Finish coding and implementing the Cat command
+- Test cases for Cat
+
+c) Am I blocked on anything?  
+- Mkdir and Cd have to be fixed, so I can not yet implement them into JShell
+- This also causes issues with fully coding Cat

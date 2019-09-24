@@ -1,0 +1,13 @@
+October 20th, 2015 
+
+a) What did I work on last time? 
+	-JShell Honor code
+b) What do I plan to work on now?  
+	-File Class structure and methods
+	-Getters and setters for file content
+	-Storage of file name, content, parent directory
+	-Directory Class structure and methods
+	-Storage of Directory name, parent, possible contained directories / files
+	-Methods to add, remove any sub directories or files
+c) Am I blocked on anything?  
+	-N/A

@@ -1,0 +1,9 @@
+Class Name: DirectoryCommand
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Provide interface for command classes which will return a directory
+
+Collaborators: 
+*

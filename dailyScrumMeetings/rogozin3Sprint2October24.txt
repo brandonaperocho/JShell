@@ -1,0 +1,17 @@
+October 24th, 2015
+
+a) What did I work on last time? 
+- Very basic JShell code
+- ManCMD command
+- Exit command
+- CRC cards
+
+b) What do I plan to work on now?  
+- Coding the JShell to near-completion
+- Adding the remaining CRC Cards
+- Coding and implementing the cat command
+- Test cases for some commands
+
+c) Am I blocked on anything?  
+- Aside from just needing the other classes finished before working
+on the JShell, there should be no problems.

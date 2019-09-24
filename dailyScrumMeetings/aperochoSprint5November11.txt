@@ -1,0 +1,18 @@
+November 11 to November 14
+
+What did I work on last time?
+
+	- Test Cases for all of the classes I worked on
+	- Final implementation of my commands into JShell
+	- Javadocs and honour code in all of the classes I worked on
+
+What do I plan on working now?
+
+	- Adding any methods in old classes to get new commands to work
+	- Make sure that the commands still work after adding 
+	- Have base code for !number command
+	- Try to implement it into JShell if I end up finishing it
+
+Am I blocked on anything?
+
+	- Nothing

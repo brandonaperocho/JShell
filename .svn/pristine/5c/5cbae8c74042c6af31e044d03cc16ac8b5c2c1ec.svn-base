@@ -1,0 +1,167 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package a2;
+
+import java.util.regex.*;
+
+public class Grep implements Command {
+  boolean recursive; //recursive option specified by user
+  boolean error = false; //true if error in command/path typed by user
+  boolean isFile; //true if the path entered by user refers to a file
+  Directory reference; // directory entered by user, or parent directory of file
+  File referenceFile; //file entered by user or file called on recursively
+  String toPrint; //string to be returned with matching lines
+  String[] separated; //split array of all directories in path name
+  String regex; //regex to be matched entered by user
+  
+  /**
+   * Public constructor, will initialize separated array, recursive option,
+   * will check if path is file or directory, and update reference and 
+   * referenceFile accordingly
+   * @param path --> full or relative path entered by user
+   * @param expression --> regex to be matched
+   * @param main --> current working directory from jshell
+   * @param root --> file system root
+   * @param recur --> recursive option specified or not.
+   */
+  public Grep(String path, String expression, 
+      Directory main, Directory root, boolean recur){
+    recursive = recur;
+    regex = expression;
+    reference = main; //will update to eventual reference based on path
+    String toSeparate = path;
+    if (path.startsWith("/")){
+      reference = root;
+      toSeparate = toSeparate.substring(1); //ignore empty string of split
+    }
+    
+    separated = toSeparate.split("/");
+    for (int i =0; i<path.length(); i++){
+      if (i != path.length()-1){
+        if (path.charAt(i)=='/' && path.charAt(i+1)=='/'){
+          error = true; //Paths with consecutive slashes are wrong
+        }
+      }
+    }if (path.equals("/")){
+      reference = root;
+      isFile = false; //root directory
+    }
+    else if (!error){
+      checkIsFile(); //will update isFile and references
+    }if (!error && !isFile && !recursive){
+      error = true; //cannot grep on a directory if not recursive
+    }
+  }
+  
+  /**
+   * Private constructor. Will be called on files within a directory when
+   * recursive. Will initialize referenceFile, isFile, regex.
+   * @param f --> file within original directory specified by user
+   * @param expression --> regex to be matched
+   */
+  private Grep(File f, String expression){
+    regex = expression;
+    referenceFile = f;
+    recursive = false;
+    isFile = true;
+  }
+  
+  /**
+   * Will check if path specified is a file or directory and set isFile
+   * accordingly. Will also update reference and referenceFile to the final 
+   * file or directory path refers to.
+   */
+  private void checkIsFile(){
+    isFile = false;
+    for (String current : separated){
+      if (isFile){
+        error = true; //iterating into file
+        return;
+      }if (current.equals("..")){
+        if (reference.getName().equals("/")){
+          error = true; //parent of root
+          return;
+        }reference = reference.getParent();
+      }else if (!current.equals(".")){
+        if (reference.containsDirectory(current)){
+          reference = reference.getChildDirectory(current);
+        }else if (reference.containsFile(current)){
+          referenceFile = reference.getChildFile(current);
+          isFile = true;
+        }else{
+          error = true; //inexistent file or directory
+          return;
+        }
+      }
+    }
+  }
+  
+  /**
+   * Sets toPrint to string of lines that match regex
+   */
+  private void setPrint(){
+    //set toPrint to the lines in referenceFile that match regex.
+    String[] lines = referenceFile.getContents().split("\n");
+    for (String line : lines){
+      Pattern p = Pattern.compile(regex);
+      Matcher m = p.matcher(line);
+      if (m.find()){
+        toPrint += line + "\n"; //if matcher matches any part of line, add line
+      }
+    }toPrint += "\n";
+  }
+
+  /**
+   * Will return toPrint. If recursive call, will set toPrint to concatenation
+   * of all toPrints of files in directory. toPrint is error message if there
+   * is an error
+   */
+  @Override
+  public String execute() {
+    // TODO Auto-generated method stub
+    toPrint = "";
+    if (error){
+      return "Invalid file, please try again\n";
+    }
+    if (recursive && !isFile){
+      for (int i=reference.getNumberDirectories();
+          i<reference.getContents().length; i++){
+        Grep g;
+        g= new Grep(reference.getChildFile(reference.getContents()[i]), regex);
+        toPrint += g.execute();
+      }return toPrint;
+    }else{
+      toPrint += referenceFile.getName() + ":\n";
+      setPrint();
+      return toPrint;
+    }
+  }
+
+}

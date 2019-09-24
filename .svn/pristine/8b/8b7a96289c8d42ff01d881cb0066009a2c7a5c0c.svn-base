@@ -1,0 +1,10 @@
+Class Name: Directory
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Store the directory's name, full path and parent directory
+*Store all of the sub-directories and files (if any)
+
+Collaborators: 
+*File

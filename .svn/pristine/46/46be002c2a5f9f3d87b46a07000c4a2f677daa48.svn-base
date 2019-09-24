@@ -1,0 +1,98 @@
+package a2;
+
+public class Copy implements DirectoryCommand {
+  private Directory main;
+  private Directory root;
+  private String initPath;
+  private String newPath;
+  private String initial;
+  private String toBeMoved;
+  private String newP;
+  private String checkFile;
+
+  public Copy(Directory mainDir, Directory rootDir, String oP, String nP) {
+    main = mainDir;
+    root = rootDir;
+    initPath = oP;
+    newPath = nP;
+  }
+
+  public Directory copyDir() {
+    ChangeDirectory tempOldAct2 = new ChangeDirectory(main, root, initPath);
+    ChangeDirectory tempNew2 = new ChangeDirectory(main, root, newPath);
+    Directory tempOldAct = tempOldAct2.execute();
+    Directory tempNew = tempNew2.execute();
+    if (tempOldAct2.isValid() && tempNew2.isValid()
+        && !tempOldAct.getName().equals("/")) {
+      toBeMoved = tempOldAct.getName();
+      Directory x = new CopyItem(tempOldAct, tempNew).returnDirectory();
+      if (tempNew.containsDirectory(toBeMoved)) {
+        tempNew.removeDirectory(toBeMoved);
+        tempNew.addDirectory(x);
+      } else {
+        tempNew.addDirectory(x);
+      }
+    } else {
+      System.out.println("Can't copy " + initPath + " into " + newPath + "!");
+    }
+    return main;
+  }
+
+  private void getNames() {
+    initial = new GetFullPath(main, initPath).getWithoutLast();
+    newP = new GetFullPath(main, newPath).getWithoutLast();
+    checkFile = new GetFullPath(main, newPath).getLast();
+    toBeMoved = new GetFullPath(main, initPath).getLast();
+  }
+
+
+  public Directory copyFile() {
+    getNames();
+    if (!toBeMoved.equals("/")) {
+      Directory temp = new ChangeDirectory(main, root, initial).execute();
+      if (temp.containsFile(toBeMoved)) {
+        File tempMove = temp.getChildFile(toBeMoved);
+        Directory check = new ChangeDirectory(main, root, newP).execute();
+        if (check.containsFile(checkFile)) {
+          File das = check.getChildFile(checkFile);
+          das.overwriteContents(tempMove.getContents());
+          return main;
+        }
+        ChangeDirectory x = new ChangeDirectory(main, root, newPath);
+        Directory newer = x.execute();
+        if (x.isValid()) {
+          File toAdd = new File(toBeMoved, newer);
+          toAdd.overwriteContents(tempMove.getContents());
+          if (newer.containsFile(toBeMoved)) {
+            newer.removeFile(toBeMoved);
+            newer.addFile(toAdd);
+          } else {
+            newer.addFile(toAdd);
+          }
+        } else {
+          System.out
+              .println("Can't copy " + initPath + " into " + newPath + "!");
+        }
+      } else {
+        System.out.println("Can't copy " + initPath + " into " + newPath + "!");
+      }
+    } else {
+      System.out.println("Can't copy " + initPath + " into " + newPath + "!");
+    }
+    return main;
+  }
+
+
+
+  @Override
+  public Directory execute() {
+    ChangeDirectory decider = new ChangeDirectory(main, root, initPath);
+    decider.execute();
+    if (decider.isValid()) {
+      return copyDir();
+    } else {
+      return copyFile();
+    }
+  }
+
+}

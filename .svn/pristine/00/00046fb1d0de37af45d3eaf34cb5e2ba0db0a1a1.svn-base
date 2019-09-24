@@ -1,0 +1,10 @@
+Class Name: GetURLFile
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Returns a file from a stated URL into the current directory
+
+Collaborators: 
+*File
+*Directory

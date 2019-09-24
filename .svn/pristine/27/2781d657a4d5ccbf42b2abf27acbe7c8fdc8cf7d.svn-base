@@ -1,0 +1,11 @@
+Class Name: Grep
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Return string of all lines matching specified regex in file(s)
+
+Collaborators: 
+*File
+*Directory
+*Command

@@ -1,0 +1,9 @@
+Class Name: Node
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+* Setting up the tail and element (for use in a linked list)
+
+Collaborators: 
+*

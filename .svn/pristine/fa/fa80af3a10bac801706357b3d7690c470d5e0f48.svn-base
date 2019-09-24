@@ -1,0 +1,197 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+
+package a2;
+
+/**
+ * <h1>Class Echo</h1> Echo2 is a class used to followed the singleton design
+ * pattern and polymorphism. This class only does uses the argument ">>" to add
+ * or appends files within the Mock FileSystem; JShell.
+ * 
+ */
+
+public class Echo2 extends Echo1 implements Command {
+
+  /**
+   * Main Directory from JShell
+   */
+  private Directory main; // Main dir from JShell
+  /**
+   * Root Directory from JShell
+   */
+  private Directory root; // Root directory
+  /**
+   * Array of Strings; input from the user of size 1 or 3
+   */
+  private String[] argsFromUser; // Arguments from user eg. echo "S" > pathName
+  /**
+   * Separates each Directory on the "/"
+   */
+  private String[] separateDir; // Used to separate the path into an array
+  /**
+   * fileName found by getting the last "/"
+   */
+  private String fileName; // Used to create file with fileName
+  /**
+   * Used in a method to get a full path
+   */
+  private String fullPathWOFileStr; // Converts to a string
+  /**
+   * The changed Directory once we have fullPathWOFileStr
+   */
+  private Directory changedDir; // Used once we change into the directory
+
+  /**
+   * Constructor
+   * 
+   * @param userArgs --> a split list of user input
+   * @param curDir --> The main Directory from JShell
+   * @param r --> The root Directory from JShell
+   */
+  public Echo2(String[] userArgs, Directory curDir, Directory r) {
+    super(userArgs, curDir, r);
+    argsFromUser = userArgs;
+    main = curDir;
+    root = r;
+  }
+
+  /**
+   * --Appends contents to file if exists otherwise creates new file If Echo
+   * entered with only String from user, prints to console If Echo entered with
+   * only fileName, adds/appends file into the current working Directory If Echo
+   * entered without "/" at the beginning, adds/appends file into the new
+   * working Directory path if it exists (Absolute path) If Echo entered with
+   * "/" at the beginning, adds/appends file into the new working Directory path
+   * if it exists (Relative path)
+   */
+  @Override
+  public void execute() {
+    if (argsFromUser[2].charAt(0) == '/') {
+      executeAbsolutePath(argsFromUser); // Executes absolutePath case
+    } else if (argsFromUser[2].charAt(0) != '/') {
+      if (argsFromUser[2].split("/").length == 1) {
+        executeCurrentPath(argsFromUser); // Executes currentPath case
+      } else if (argsFromUser[2].split("/").length > 1) {
+        executeRelativePath(argsFromUser); // Executes relativePath case
+      }
+    }
+  }
+
+  /**
+   * Called by execute() when Absolute path provided
+   */
+  private void executeAbsolutePath(String[] inputFromUser) {
+    if (inputFromUser[2].split("/").length > 2) {
+      inputFromUser[2] = inputFromUser[2].substring(1);
+    }
+    separateDir = inputFromUser[2].split("/"); // Splits Directory into array
+    fileName = separateDir[separateDir.length - 1]; // Gets fileName
+    fullPathWOFileStr = returnFullPathName(inputFromUser[2]);
+
+
+    ChangeDirectory tempD = new ChangeDirectory(main, root, fullPathWOFileStr);
+
+    changedDir = tempD.execute();
+
+    if (!changedDir.getFullPath().equals(main.getFullPath())) {
+      if (changedDir.containsDirectory(fileName)) { // if dir contained within
+        System.out.println("Name already taken by Directory!");
+      } else if (changedDir.containsFile(fileName)) { // if file contain within
+        changedDir.getChildFile(fileName).addToContents(inputFromUser[0]);
+      } else {
+        changedDir.addFile(new File(fileName, changedDir, inputFromUser[0]));
+      } // Otherwise keeps the file
+    } else {
+      System.out.println("Path does not exist!");
+    }
+  }
+
+  /**
+   * Called by execute() method when relative PathName is provided
+   */
+  private void executeRelativePath(String[] inputFromUser) {
+    separateDir = inputFromUser[2].split("/"); // Splits Directory into array
+    fileName = separateDir[separateDir.length - 1]; // Gets fileName
+    fullPathWOFileStr = returnFullPathName(inputFromUser[2]);
+
+    ChangeDirectory tempD = new ChangeDirectory(main, root, fullPathWOFileStr);
+    changedDir = tempD.execute();
+
+    if (changedDir.containsDirectory(fileName)) { // if dir is contained within
+      System.out.println("Name already taken by Directory!");
+    } else if (changedDir.containsFile(fileName)) { // if file contained within
+      changedDir.getChildFile(fileName).addToContents(inputFromUser[0]);
+    } else {
+      changedDir.addFile(new File(fileName, changedDir, inputFromUser[0]));
+    } // Otherwise create the file
+  }
+
+  /**
+   * Called by execute() when only file name is given
+   */
+  private void executeCurrentPath(String[] inputFromUser) {
+    fileName = inputFromUser[2];
+    if (main.containsFile(fileName)) { // if file contained within
+      main.getChildFile(fileName).addToContents(inputFromUser[0]);
+    } else if (main.containsDirectory(fileName)) { // if dir is contained within
+      System.out.println("Name already taken by Directory!");
+    } else {
+      main.addFile(new File(fileName, main, inputFromUser[0]));
+    } // Otherwise create file
+  }
+
+  /**
+   * Returns the full path name without the last item in the path(file)
+   */
+  private String returnFullPathName(String newDir) { // Returns fullPathName
+    if (newDir.startsWith("/")) {
+      if (newDir.length() == fileName.length() + 1) {
+        fullPathWOFileStr = "/";
+      } else {
+        fullPathWOFileStr =
+            newDir.substring(0, newDir.length() - (fileName.length() - 1));
+      }
+    } else if (!newDir.startsWith("/") && separateDir.length > 1) {
+      if (main.getFullPath().equals("/")) {
+        fullPathWOFileStr =
+            main.getFullPath()
+                + newDir
+                    .substring(0, newDir.length() - (fileName.length() + 1));
+      } else {
+        fullPathWOFileStr =
+            main.getFullPath()
+                + "/"
+                + newDir
+                    .substring(0, newDir.length() - (fileName.length() + 1));
+      }
+    }
+    return fullPathWOFileStr; // Returns the string of the fullPath - fileName
+  }
+}

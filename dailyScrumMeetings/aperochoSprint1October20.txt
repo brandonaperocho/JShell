@@ -1,0 +1,16 @@
+What did I work on last time?
+
+	- Product backlog
+	- Sprint1 backlog
+	- Honour code
+
+What do I plan on working on now?
+
+	- Have a basic idea to most of the commands
+	- Work on the code when possible
+	- Try to finish at least 2 commands by next scrum
+
+Am I blocked by anything?
+
+	- Need to understand how the FileSystem is going to work so implementation can become easier
+

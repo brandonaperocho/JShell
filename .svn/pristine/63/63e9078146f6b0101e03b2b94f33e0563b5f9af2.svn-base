@@ -1,0 +1,58 @@
+//Sprint 3 Backlog.
+
+October 30th to November 5th
+
+================================================================================================
+
+NOTES:
+
+1. Few CRC cards remain that are incomplete.
+2. JShell requires coding for a few more cases.
+3. Cat almost complete. Still waiting on echo command to be fully completed. (Echo still must
+   be completed)
+4. Mkdir and Cd had problems initially. So we met up as a group and completed it. (Not an
+   individual effort)
+
+================================================================================================
+
+Implementations (from Backlog) That Are To Be Made:
+
+1. Continue coding for the JShell (Redesgin the JShell, so that it meets specifications)
+2. Complete coding for Cat, Echo classes.
+3. Redesign the code for all other classes, so that it meets specifications.
+(Completing all this will allow the user to perform all the actions written in the backlog.)
+
+================================================================================================
+
+Specific tasks:
+
+1a. CRC Cards for the remaining classes (and any that are newly created)
+2a. Attempt to Redesign JShell, handle cases
+2b. Attempt to Redesign MakeDirectory, handle wrong cases
+2c. Attempt to Redesign ChangeDirectory, handle wrong cases
+2d. Attempt to Redesign LS, handle wrong cases
+2e. Attempt to Redesign Pushdpopd, handle wrong cases
+2f. Attempt to Redesign ManCMD, handle wrong cases
+3a. Code the Echo class
+3b. Code the Cat class
+4a. Remaining test cases for individual classes
+5a. Format code for individual classes, in addition to providing comments
+
+================================================================================================
+
+Tasks assigned to group members:
+
+U1. Brandon Aperocho
+U2. Mateusz Rogozinski
+U3. Brian Vu
+U4. Kwame Koram
+
+U1 Tasks: 1a, 2a, 4a, 5a, 3a
+
+U2 Tasks: 1a, 2a, 4a, 5a, 2b, 2f, 3b
+
+U3 Tasks: 1a, 2a, 4a, 5a, 2b, 2e
+
+U4 Tasks: 1a, 2a, 4a, 5a, 2c, 2d
+
+================================================================================================

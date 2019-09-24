@@ -1,0 +1,11 @@
+November 18, 2015 
+
+a) What did I work on last time? 
+	-base code for recursive LS
+	-improved directory design to help with recursive LS
+b) What do I plan to work on now?  
+	-Redesign LS to match new command string-returning interface
+	-Change LS CRC to match
+	-Change command CRC to match
+c) Am I blocked on anything?  
+	-N/A

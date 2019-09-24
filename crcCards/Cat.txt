@@ -1,0 +1,11 @@
+Class Name: Cat
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Print the contents of the specified file(s)
+
+Collaborators: 
+*File
+*Directory
+*Command

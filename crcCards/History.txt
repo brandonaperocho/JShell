@@ -1,0 +1,10 @@
+Class Name: History
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Print out the commands that were recently input into JShell
+
+Collaborators: 
+*LinkedList
+*Command

@@ -1,0 +1,13 @@
+October 31st, 2015
+
+a) What did I work on last time? 
+- Coded MakeDirectory
+- coded ChangeDirectory class
+
+b) What do I plan to work on now?  
+- Redesigning MakeDirectory
+- Redesigning Pushd
+- Redesigning Popd
+
+c) Am I blocked on anything?  
+- No

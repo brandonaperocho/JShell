@@ -1,0 +1,14 @@
+November 22nd, 2015 (ASSIGNMENT 2B)
+
+a) What did I work on last time? 
+- CRC Cards for classes relating to mv and cp command
+- mv and cp commands have been coded generally (may have some errors)
+
+b) What do I plan to work on now?
+- Finalize code for classes relating to mv and cp commands
+- Generate test classes for these classes
+- Format and Comment
+- Classes are: GetFullPath, Copy, CopyItem, Move
+
+c) Am I blocked on anything?  
+- 

@@ -1,0 +1,12 @@
+Class Name: PushD
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Stores current directory into a stack
+*Changes directory to the directory provided by the user and returns it
+
+Collaborators: 
+*LinkedList
+*ChangeDirectory
+*DirectoryCommand

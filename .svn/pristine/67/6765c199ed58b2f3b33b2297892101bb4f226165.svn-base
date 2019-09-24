@@ -1,0 +1,20 @@
+November 2nd, 2015
+
+a) What did I work on last time? 
+- Redesigned the MakeDirectory, ManCMD classes
+- Implemented execute into ManCMD, PWD from Command
+- Cat Class was finished
+- Part of Cat Test class was finished
+- Commented most of the code
+
+b) What do I plan to work on now?
+- Implement execute into MakeDirectory, Cat from Command
+- Create InputTaker class
+- Create HandleCase class
+- CRC Cards for these classes
+- Redesign JShell so that it works with these
+- Finish test cases
+- Format and comment the code
+
+c) Am I blocked on anything?  
+- 

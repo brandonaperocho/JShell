@@ -1,0 +1,13 @@
+November 15th, 2015 (ASSIGNMENT 2B)
+
+a) What did I work on last time? 
+- Brainstormed the way the cp and mv should work
+- Got an idea of how the code should look for cp and mv
+
+b) What do I plan to work on now?
+- Begin coding the mv and cp commands
+- Generate test classes for these two commands
+- Create CRC Cards for the Mv and Cp classes
+
+c) Am I blocked on anything?  
+- 

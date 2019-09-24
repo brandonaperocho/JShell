@@ -1,0 +1,63 @@
+//Sprint 4 Backlog.
+
+November 16th to 20th 
+
+================================================================================================
+
+NOTES:
+
+1. Finished PreviousCommand and new Cat functionality.
+	a. Implemented both commands to work in JShell 
+	b. Updated/created test cases for these commands
+2. Have LS command partially completed with basic functionality 
+	a. Need to have it print in correct format; works otherwise
+3. Get command partially completed
+4. Still need to update/create CRC Cards for commands listed above
+
+================================================================================================
+
+Implementations (from Backlog) That Are To Be Made:
+
+1. Have get command working 100% with JShell
+2. Have mv and cp commands to be completed by the end of this sprint
+3. Have grep command to be working as well
+4. Have ls command to be 100% working with JShell by the end of this sprint
+5. Have redirection working with all commands
+6. Have all of the following commands integrated into JShell without error
+
+================================================================================================
+
+Specific tasks:
+
+1a. CRC Cards for commands and update them as needed
+2a. Have mv command, handle wrong cases 
+2b. Have test cases for mv command
+3a. Have cp command, handle wrong cases
+3b. Have test cases for cp command
+4a. Have redirection work for all commands with exception of exit
+4b. Have updated test cases for all commands when redirection implemented
+4c. Have HandleCase class updated to handle redirection
+5a. Have grep command, handle wrong cases
+5b. Have test cases for grep command
+6a. Have get command finished
+6b. Have test cases for get command 
+
+
+================================================================================================
+
+Tasks assigned to group members:
+
+U1. Brandon Aperocho
+U2. Mateusz Rogozinski
+U3. Brian Vu
+U4. Kwame Koram
+
+U1 Tasks: 1a, 4a, 4b, 4c
+
+U2 Tasks: 1a, 2a, 2b, 3a, 3b, 4b
+
+U3 Tasks: 1a, 4b, 5a, 5b
+
+U4 Tasks: 1a, 4b, 6a, 6b
+
+================================================================================================

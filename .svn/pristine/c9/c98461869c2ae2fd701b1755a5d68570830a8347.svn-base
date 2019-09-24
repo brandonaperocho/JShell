@@ -1,0 +1,21 @@
+October 24th, 2015 
+
+a) What did I work on last time? 
+	-File Class structure
+	-File Class methods: storing/retrieving content, relationship with dirs.
+	-Directory Class structure: full paths, storage of contents in linked lists
+	-Directory Class methods: retrieval/addition of contents, relationship
+	- (cont) to other directories.
+	-Unit testing for File and Directory classes
+b) What do I plan to work on now?  
+	-Go over CRC cards to ensure design continues to follow them, and update
+	- (cont) to reflect any needs for forward design to change
+	-ls class methods: constructors for various different scenarios
+	- (cont) eg to work with a file or directory, to check if file/dir existent
+	-pwd class methods: printing full pathname from current directory object
+	-Unit testing of ls and pwd classes
+	-Review file and directory class designs to work as intended with classes
+	- (cont.) being worked on by team members.
+c) Am I blocked on anything?  
+	-ls may need some implementation of JShell to work as intended with an 
+	- (cont) uncertain list of multiple arguments

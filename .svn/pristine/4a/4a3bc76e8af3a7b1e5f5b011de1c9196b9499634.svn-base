@@ -1,0 +1,13 @@
+Class Name: Move
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Moves a file/directory to another location (directory/file)
+
+Collaborators: 
+*File
+*Directory
+*ChangeDirectory
+*GetFullPath
+*CopyItem

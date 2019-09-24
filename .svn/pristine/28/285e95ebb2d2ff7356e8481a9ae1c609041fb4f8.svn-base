@@ -1,0 +1,184 @@
+// **********************************************************
+// Assignment2:
+// Student1: Brandon Aperocho
+// UTOR user_name: aperocho
+// UT Student #: 1000763774
+// Author: Brandon Aperocho
+//
+// Student2: Mateusz Rogozinski
+// UTOR user_name: rogozin3
+// UT Student #: 1000846203
+// Author: Mateusz Rogozinski
+//
+// Student3: Kwame Koram
+// UTOR user_name: koramkwa
+// UT Student #: 1001960693
+// Author: Kwame Koram
+//
+// Student4: Brian Vu
+// UTOR user_name: vubrian
+// UT Student #: 1001210281
+// Author: Brian Vu
+//
+//
+// Honor Code: I pledge that this program represents my own
+// program code and that I have coded on my own. I received
+// help from no one in designing and debugging my program.
+// I have also read the plagiarism section in the course info
+// sheet of CSC 207 and understand the consequences.
+// *********************************************************
+package a2;
+
+import java.util.Arrays;
+
+/**
+ * Cat - Used to print the contents of a file.
+ */
+public class Cat implements Command {
+  /**
+   * The file name or the full path
+   */
+  private String name;
+  /**
+   * The current working directory
+   */
+  private Directory current;
+  /**
+   * The root directory
+   */
+  private Directory rootDir;
+  /**
+   * Splits name on every instance of /
+   */
+  private String[] splitName;
+  /**
+   * The name of the file itself
+   */
+  private String file;
+  /**
+   * The full path where the file is located
+   */
+  private String fPath;
+  /**
+   * The array of all files requested to be printed.
+   */
+  private String[] names;
+  /**
+   * The full contents of every file requested. (Formatted)
+   */
+  private String toPrint;
+  /**
+   * Whether or not only contents of one file is requested.
+   */
+  private boolean standard;
+  
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  /**
+   * Cat Constructor for One File
+   * 
+   * @param curDir - the current directory
+   * @param root - the root directory
+   * @param fileName - the name/path of the file
+   */
+  public Cat(Directory curDir, Directory root, String fileName) {
+    current = curDir;
+    name = fileName;
+    rootDir = root;
+    standard = true;
+    // Check below if the path name is absolute
+    if (name.startsWith("/")) {
+      splitName = name.substring(1).split("/");
+    } else {
+      splitName = name.split("/");
+    }
+    file = splitName[splitName.length - 1];
+  }
+  
+  /**
+   * Cat Constructor for Multiple Files
+   * 
+   * @param curr - the current directory
+   * @param root - the root directory
+   * @param fileNames - all the names/paths of the files 
+   */
+  public Cat(Directory curr, Directory root, String[] fileNames){
+    names = Arrays.copyOfRange(fileNames, 1, fileNames.length);
+    rootDir = root;
+    current = curr;
+    standard = false;
+    toPrint = "";
+  }
+  
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  //+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+  
+  /**
+   * Gets the contents of all requested files, and returns a formatted string
+   * that contains all the contents.
+   * 
+   * @return toPrint - will return the contents/error message for every file
+   * requested, in a formatted manner.
+   */
+  public String getMultFileCont(){
+    for (String path: names){ // For every requested file path/name
+      Cat temp = new Cat(current, rootDir, path);
+      toPrint = toPrint + path + ":\n" + temp.getContents() + "\n\n";
+    } // Above will format. Below will get rid of whitespace after last file.
+    toPrint = toPrint.substring(0, toPrint.length()-2);
+    return toPrint;
+  }
+  
+  /**
+   * Get the contents of the file
+   * 
+   * @return String - will return an error message or the file contents.
+   */
+  public String getContents() {
+    // The event that the name is local (not relative/absolute)
+    if (name.split("/").length == 1) {
+      if (current.containsFile(name)) {
+        return current.getChildFile(name).getContents();
+      } else {
+        return "That file does not exist!";
+      } // Returns error message or the contents
+    } else {
+      // The event the name is absolute
+      if (name.startsWith("/")) {
+        if (name.length() == file.length() + 1) {
+          fPath = "/";
+        } else {
+          fPath = name.substring(0, name.length() - (file.length() + 1));
+        } // Below is the event the name is relative
+      } else if (!name.startsWith("/") && splitName.length > 1) {
+        if (current.getFullPath().equals("/")) {
+          fPath = current.getFullPath()
+              + name.substring(0, name.length() - (file.length() + 1));
+        } else {
+          fPath = current.getFullPath() + "/"
+              + name.substring(0, name.length() - (file.length() + 1));
+        }
+      } // Either way, a path without the file at the end is created
+        // Change directory to the path specified, then get the file contents
+      Directory newD = new ChangeDirectory(current, rootDir, fPath).execute();
+      if (newD.containsFile(file)) {
+        return newD.getChildFile(file).getContents();
+      } else {
+        return "That file does not exist!";
+      } // Returns error message or the contents
+    }
+  }
+
+  // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+  /**
+   * Implemented from Command; used to run cat class
+   */
+  public void execute() {
+    if (standard){
+    System.out.println(getContents());
+    } else if (standard == false){
+    System.out.println(getMultFileCont());
+    }
+  }
+}

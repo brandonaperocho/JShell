@@ -1,0 +1,49 @@
+//Sprint 1 Backlog.
+
+October 20th to October 23rd
+
+================================================================================================
+
+Implementations (from Backlog) That Are To Be Made:
+
+1. Create the basic skeleton code for the JShell (Input, Argument Identification, Cases)
+2. Have base code for Directory
+3. Have base code for File
+4. Have base code for some commands (Commands that we can implement immediately)
+
+================================================================================================
+
+Specific tasks:
+
+1a. Base code for Directory
+1b. Base code for File
+2a. CRC Cards for all classes
+3a. JShell basic input
+3b. JShell cases
+3c. JShell argument identifier
+4a. Base code for exit command
+4b. Base code for man CMD command
+5a. Base code for pushd command
+5b. Base code for popd command
+5c. Base code for history command
+5d. Base code for cd command
+5e. Base code for mkdir command
+
+================================================================================================
+
+Tasks assigned to group members:
+
+U1. Brandon Aperocho
+U2. Mateusz Rogozinski
+U3. Brian Vu
+U4. Kwame Koram
+
+U1 Tasks: 5a, 5b, 5c
+
+U2 Tasks: 2a, 3a, 3b, 3c, 4a, 4b
+
+U3 Tasks: 5d, 5e
+
+U4 Tasks: 1a, 1b
+
+================================================================================================

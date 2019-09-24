@@ -1,0 +1,11 @@
+November 15rd, 2015 
+
+a) What did I work on last time? 
+	-CRC Cards
+	-get command
+b) What do I plan to work on now?  
+	-unfinished CRC cards
+	-Test cases
+	-get command
+c) Am I blocked on anything?  
+	-N/A

@@ -1,0 +1,9 @@
+Class Name: LinkedList
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+* Create a data structure that will link one element to another
+
+Collaborators: 
+*Node

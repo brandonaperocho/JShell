@@ -1,0 +1,13 @@
+Class Name: Copy
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Copies a file/directory to another location (directory/file)
+
+Collaborators: 
+*File
+*Directory
+*ChangeDirectory
+*GetFullPath
+*CopyItem

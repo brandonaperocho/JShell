@@ -1,0 +1,9 @@
+Class Name: GetFullPath
+Parent Class: ------
+Subclasses: ------
+
+Responsibilities:
+*Gets the absolute full path of any provided path
+
+Collaborators: 
+*Directory
